@@ -1,0 +1,138 @@
+@media(min-width:768px) {
+    .navbar-nav {
+        padding-right: 80px;
+        float: none;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .navbar-nav > li {
+        float: none;
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+#logo-EgyDexHexaKiss {
+    width: 30%;
+    margin-top: 70px;
+    padding-top: 20px;
+    padding-bottom: 100px;
+}
+
+#about {
+    background-color: #2d041f;
+    width: 100%
+}
+
+#list-result li {
+    height: 50px;
+    font-size: 25px;
+}
+
+#partners-banner {
+    width: 100%;
+    background: #FFF;
+    text-align: center;
+    padding: 2em;
+}
+#partners-banner li {
+    margin: 0 2em;
+}
+
+#contact {
+    margin-top : 100px;
+    width: 100%;
+    background-color: #2d041f;
+}
+
+.btn {
+    padding: 10px;
+}
+
+.logo-partenaire {
+  height: 75px;
+  width: auto;
+}
+
+#logo-HexaKiss {
+  height: 60px;
+  width: auto;
+}
+
+input::placeholder {
+  color: #fff;
+  font-size: 1em;
+}
+
+input:focus::placeholder {
+  color: #bbb5af;
+}
+
+/* on hover placeholder */
+#form {
+  padding: 20px;
+  position: relative;
+  top : -500px;
+  width: 650px;
+  background-color: rgba(45, 4, 31, 0.8);
+  margin: 50px auto 100px auto;
+}
+
+input {
+  font-family: 'Raleway', sans-serif;
+  font-size: 2em;
+  
+  background: transparent;
+  outline: none;
+  color: #fff;
+  
+  border: solid 1px #fff;
+  border: none;
+
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  }
+
+input:hover {
+  color: #c53f09;
+}
+
+#submit {
+  font-family: 'Raleway', sans-serif;
+  font-size: 2em;
+  
+  background: transparent;
+  outline: none;
+  color: #fff;
+  
+  border: solid 1px #fff;
+  border: none;
+
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  padding: 0;
+  margin: -5px 0px 0px 0px;
+  
+  font-size: 2em;
+  color: #fff;
+  
+  outline:none;
+  cursor: pointer;
+  border : none;
+}
+
+#submit:hover {
+  color: #c53f09;
+}
+
+#list-result {
+  font-size: 2.2em;
+}
+footer {
+    background-color: #2d041f;
+}

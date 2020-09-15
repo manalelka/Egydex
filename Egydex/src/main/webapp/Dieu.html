@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Site EgyDex - Web Semantique">
+    <meta name="keywords" content="Egypte, INSA, Lyon, Web, Semantique, Dieux, antique, Antiquité">
+    <meta name="author" content="H4132 HexaKiss">
+
+    <meta property="og:title" content="EgyDex - Divinites">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Site EgyDex pour le projet de Web Semantique">
+    
+
+    <title>EgyDex - Divinities</title>
+    <link rel="shortcut icon" type="image/png" href="./favicon.png"/>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Grayscale CSS -->
+    <link href="css/grayscale.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    
+    <script>
+        getGod();
+        
+        function getGod() {
+            // Requête AJAX
+            var curr_url = window.location.href;
+                var p1 = new RegExp('[?&]' + "dieu" + '=([^&#]*)', 'i');
+                var string1 = p1.exec(curr_url);
+                var uri = string1 ? string1[1] : undefined;
+            
+            console.log(uri);
+            $.ajax({
+                url: './ActionServlet', // URL
+                method: 'POST',         // Méthode
+                data: {                 // Paramètres
+                    todo: 'getDetails',
+                    name: uri,
+                    type: 'dieu',
+                    uri: uri
+                    
+                },
+                dataType: 'json'        // Type de retour attendu
+            
+            }).done( function (response) {  // Appel OK => "response" contient le resultat JSON
+                
+                $('#name').html(response.label);
+                if(response.gender !== ""){
+                    $('#gender').html(response.gender);
+                }
+                if(response.description !== ""){
+                    $('#description').html(response.description);
+                }
+                if(response.thumbnail !== ""){
+                    $('#GodImg').html('<img src='+response.thumbnail+' alt='+response.label+' height=550>');
+                    $('#GodImg').append('<p style="width: 500px; padding-top: 40px">'+response.caption+'</p>');
+                }
+                if(response.godOf !== ""){
+                    $('#godOf').html(response.godOf);
+                }
+                if(response.intro !== ""){
+                    $('#intro').html(response.intro);
+                }
+                if(response.symbols.length > 0) {
+                    $('#symbol').empty();
+                    for(i in response.symbols){
+                        if(response.symbols[i].uri === ""){
+                            $('#symbol').append(response.symbols[i].name+" ");
+                        }else{
+                            $('#symbol').append(response.symbols[i].name+" ");
+                            $('#SymbolImg').append('<img src='+response.symbols[i].uri+' alt=Symbol'+i+' height=60 >');
+                        }
+                    }
+                }
+                
+                if(response.cultCenters.length > 0) {
+                    $('#cultCenters').empty();
+                    for(i in response.cultCenters){
+                        if(response.cultCenters[i].uri === ""){
+                            $('#cultCenters').append(response.cultCenters[i].name+" ");
+                        }else{
+                            $('#cultCenters').append("<a href='./Lieu.html?lieu="+response.cultCenters[i].uri+"'>"  + response.cultCenters[i].name + '</a> ');
+                        }
+                    }
+                }
+                
+                if(response.children.length > 0) {
+                    $('#children').empty();
+                    for(i in response.children){
+                        if(response.children[i].uri === ""){
+                            $('#children').append(response.children[i].name+" ");
+                        }else{
+                            $('#children').append("<a href='./Dieu.html?dieu="+response.children[i].uri+"'>"  + response.children[i].name + '</a> ');
+                        }
+                    }
+                }
+                
+                if(response.siblings.length > 0) {
+                    $('#siblings').empty();
+                    for(i in response.siblings){
+                        if(response.siblings[i].uri === ""){
+                            $('#siblings').append(response.siblings[i].name+" ");
+                        }else{
+                            $('#siblings').append("<a href='./Dieu.html?dieu="+response.siblings[i].uri+"'>"  + response.siblings[i].name + '</a> ');
+                        }
+                    }
+                }
+                
+                if(response.friends.length > 0) {
+                    $('#friends').empty();
+                    for(i in response.friends){
+                        if(response.friends[i].uri === ""){
+                            $('#friends').append(response.friends[i].name+" ");
+                        }else{
+                            $('#friends').append("<a href='./Dieu.html?dieu="+response.friends[i].uri+"'>"  + response.friends[i].name + '</a> ');
+                        }
+                    }
+                }
+                
+                if(response.parents.length > 0) {
+                    $('#parents').empty();
+                    for(i in response.parents){
+                        if(response.parents[i].uri === ""){
+                            $('#parents').append(response.parents[i].name+" ");
+                        }else{
+                            $('#parents').append("<a href='./Dieu.html?dieu="+response.parents[i].uri+"'>"  + response.parents[i].name + '</a> ');
+                        }
+                    }
+                }
+                console.log(response);
+             
+            }).fail( function (error) { // Appel KO => erreur a gérer
+                // Popup avec message d'erreur :
+                alert('Erreur lors de l\'appel: HTTP Code ' + error.status + ' ~ ' + error.statusText + ' ~ ' + error.getResponseHeader('Content-Type'));
+            });
+        }
+    </script>
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+	<!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#page-top">
+                    <i class="fa fa-play-circle"></i> EgyDex
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse text-center">
+                <span style="float: left; margin-left : 40px"><a href="./index.html"><img src="img/egydex-blanc.png" alt="Logo EgyDex blanc" width="150"></a></span>
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a href="./index.html">Home</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+    </nav>
+
+    <!-- Intro Header -->
+    <header class="intro-home">
+        <div class="intro-body" style="text-align: center">
+            <img src="img/dx.jpg" alt="thot" style="width: 100%; height: auto">
+        </div>
+    </header>
+
+    <!-- Result Section --> 
+    <section id="searchResult" class ="container content-section">
+        <div id="infosDx" class="row container content-section" style="padding-top: 80px;">
+            <div class="text-center col-lg-6" id="GodImg">
+                <table>
+                    <tr><td><h4 id="caption"></h4></tr>
+                </table>
+            </div>
+            <div class="col-lg-6" id="generalInfos">
+                <h1 class="text-center custom_title" id="name"></h1>
+                <table>
+                    <tr><td><h4 class="custom_title" style="width: 240px">Gender</h4>
+                        <td><h4 id="gender">-</h4></tr>                      
+                    <tr><td><h4 class="custom_title">God Of</h4>
+                        <td><h4 id="godOf">-</h4></tr>  
+                    <tr><td><h4 class="custom_title">Symbol</h4>
+                        <td><h4 id="symbol">-</h4></tr> 
+                    <!--tr><td><h4 class="custom_title"></h4>
+                        <td id="SymbolImg" height="80"></tr--> 
+                    <tr><td><h4 class="custom_title">Type</h4>
+                        <td><h4 id="description">-</h4></tr>    
+                    <tr><td><h4 class="custom_title">Cult center(s)</h4>
+                        <td><h4 id="cultCenters">-</h4></tr>
+                </table>
+                
+                <div id="relatedGods"  style="padding-top: 80px;">
+            <h2 class="text-center custom_title">Related Gods</h2>
+            <div>
+                <table>
+                    <tr><td><h4 class="custom_title" style="width: 240px">Parents</h4>
+                        <td><h4 id="parents">-</h4></tr>
+                    <tr><td><h4 class="custom_title">Siblings</h4>
+                        <td><h4 id="siblings">-</h4></tr>
+                    <tr><td><h4 class="custom_title">Children</h4>
+                        <td><h4 id="children">-</h4></tr>    
+                    <tr><td><h4 class="custom_title">Consort</h4>
+                        <td><h4 id="friends">-</h4></tr>    
+                </table>
+            </div>
+        </div>
+            </div>
+        </div>
+        
+        
+        
+        <div id="descDx" class="row container content-section text-center" style="padding-top: 120px;">
+            <div class="text-center col-lg-12" id="thumbnail">
+                <h2 class="text-center custom_title">Description</h2>
+                <p id="intro" style="text-align: justify"></p>
+            </div>
+        </div>
+    </section>
+       
+    <!-- logo Section -->
+    <section id="logo" style="padding-top: 200px">
+        <div class="" id="partners-banner">
+            <ul class="list-inline">
+                <!-- Text Version -->
+                <li>
+                    <a href="https://www.insa-lyon.fr/"><img src="img/logo_insa_lyon.png" height="60" alt="logo-insa-lyon"></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+          <p>Copyright &copy; HexaKiss <img src="img/Logo hexakiss.png" id="logo-HexaKiss" alt="logo-HexaKiss"> 4IF 2019-2020.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/grayscale.js"></script>
+</body>
+
+</html>
